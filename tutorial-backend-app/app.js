@@ -88,19 +88,50 @@ async function start() {
 
     app.post('/pages', cors(), verifyToken, async(req, res) => {
 	    try{
-		    //const json_body = JSON.parse(req.body);
-		    const page = {
-			    name: req.body.name,
-			    text: req.body.text,
-			    owner: req.user.userId
+		    var filter = {"_id": new ObjectId(req.body._id)}
+		    const old_page = await pagesCollection.findOne(filter);
+		    // Check if the page exists
+		    if (old_page === null){
+			    res.status(500).send({err: "Invalid _id"});
+			    return;
 		    }
-		    const result = await pagesCollection.insertOne(page);
-		    res.status(200).send({message: "Created New Page"});
+		    // validate that the user owns the page
+		    if(old_page.owner === null || old_page.owner != req.user.userId){
+			    res.status(500).send({err: "Invalid User"});
+                            return;
+		    }
+		    // only allow updates to page name or body
+		    const page_update = {
+			    $set: {
+				    name: req.body.name,
+                                    text: req.body.text
+			    }
+		    }
+		    const result = await pagesCollection.insertOne(filter, page_update);
+		    res.status(200).send({message: "Edited Page"});
 	    }
 	    catch(err){
 		    console.log(err);
 		    res.status(500).send({err: "error"});
 	    }
+    });
+
+    app.put('/pages', cors(), verifyToken, async(req, res) => {
+	    try{
+                    //const json_body = JSON.parse(req.body);
+                    const page = {
+
+                            name: req.body.name,
+                            text: req.body.text,
+                            owner: req.user.userId
+                    }
+                    const result = await pagesCollection.insertOne(page);
+                    res.status(200).send({message: "Created New Page"});
+            }
+            catch(err){
+                    console.log(err);
+                    res.status(500).send({err: "error"});
+            }
     });
         
     app.listen(port, () => {
