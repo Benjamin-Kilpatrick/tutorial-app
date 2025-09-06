@@ -1,0 +1,59 @@
+.App {
+  text-align: left;
+  align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+
+.App-link {
+  color: #61dafb;
+}
+
+
+.Page {
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #FCF4F3;
+	width: min(82rem, 90%);
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-top: 1rem;
+	padding-bottom: 2rem;
+	border-bottom: 0.25rem solid #607D8B
+}
+
+h1 {
+	color: #2E7D32;
+}
+
+h2 {
+	color: #43A047;
+}
+
+h3 {
+	color: #66BB6A;
+}
+
+h4 {
+	color: #81C784;
+}
+
+h5 {
+	color: #4DB6AC;
+}
+
+h6 {
+	color: #80CBC4;
+}
+
+pre:has(code) {
+	background-color: #FFFFFF;
+	width: min(60rem, 100%);
+	margin-left: auto;
+	margin-right: auto;
+	padding:1rem;
+}

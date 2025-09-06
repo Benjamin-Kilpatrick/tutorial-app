@@ -1,0 +1,59 @@
+
+services:
+  frontend:
+    build: ./tutorial-frontend-app
+    hostname: frontend
+    ports:
+      - "8080:3000"
+    depends_on:
+      backend:
+        condition: service_started
+    networks:
+      - main-network
+
+  backend:
+    build: ./tutorial-backend-app
+    hostname: backend
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3001:3001"
+    networks:
+      - main-network
+  db:
+    image: mongo
+    restart: always
+    hostname: mongo
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - "./mongo/:/docker-entrypoint-initdb.d/"
+    networks:
+      - main-network
+    healthcheck:
+      test: mongosh --username=root --password=root --authenticationDatabase=admin
+        --quiet --eval "db.adminCommand('ping').ok"
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+  #  command: --ipv6
+
+  #mongo-express:
+  #  image: mongo-express
+  #  restart: always
+  #  ports:
+  #    - 8081:8081
+  #  environment:
+  #    ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+  #    ME_CONFIG_BASICAUTH_ENABLED: true
+  #    ME_CONFIG_BASICAUTH_USERNAME: user
+  #    ME_CONFIG_BASICAUTH_PASSWORD: user
+  #  networks:
+  #    - main-network
+    
+networks:
+  main-network:
+    driver: bridge
