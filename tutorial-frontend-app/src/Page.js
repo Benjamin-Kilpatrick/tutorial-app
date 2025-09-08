@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import ReactMarkdown from "react-markdown";
 
-function Page({fileName}) {
+function Page({pageText}) {
 
-  const [pageText, setPageText] = useState('loading...');
-
+  //const [pageText, setPageText] = useState('loading...');
+  /*
   useEffect(() => {
           async function getText(fileName){
                   fetch(fileName)
@@ -15,7 +15,7 @@ function Page({fileName}) {
           }
           getText(fileName);
   }, []);
-
+  */
   return (
     <div className="Page">
       <ReactMarkdown>{pageText}</ReactMarkdown>
