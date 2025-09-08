@@ -9,21 +9,23 @@ const express = require('express');
 const mongodb = require('mongodb');
 const cors = require('cors');
 
-const app = express();
-const port = 3001;
-const mongo_db_name = "docs";
-const mongo_pages_collection = "pages";
-const mongo_username = "root";//"user";
-const mongo_password = "root";//"password";
-const mongo_host = "mongo";
-const mongo_port = 27017;
+
+const port = process.env.BACKEND_PORT || 3001;
+const mongo_db_name = process.env.MONGO_DB_NAME || "docs";
+const mongo_pages_collection = process.env.MONGO_COLLECTION || "pages";
+const mongo_username = process.env.MONGO_USERNAME || "user";
+const mongo_password = process.env.MONGO_PASSWORD || "password";
+const mongo_host = process.env.MONGO_HOST || "mongo";
+const mongo_port = process.env.MONGO_PORT || 27017;
+const mongo_auth_source = process.env.MONGO_AUTH_SOURCE || mongo_db_name;
 
 const MongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectId;
 const ServerApiVersion = mongodb.ServerApiVersion;
 
-const url = `mongodb://${mongo_username}:${mongo_password}@${mongo_host}:${mongo_port}/${mongo_db_name}?authSource=admin`;
+const url = `mongodb://${mongo_username}:${mongo_password}@${mongo_host}:${mongo_port}/${mongo_db_name}?authSource=${mongo_auth_source}`;
 
+const app = express();
 
 async function start() {
   try {
