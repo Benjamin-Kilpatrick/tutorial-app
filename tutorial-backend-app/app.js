@@ -23,8 +23,6 @@ const ObjectId = mongodb.ObjectId;
 const ServerApiVersion = mongodb.ServerApiVersion;
 
 const url = `mongodb://${mongo_username}:${mongo_password}@${mongo_host}:${mongo_port}/${mongo_db_name}?authSource=admin`;
-console.log(" ---------------> " + url);
-
 
 
 async function start() {
@@ -40,7 +38,6 @@ async function start() {
     });
 
     app.get('/pages', cors(), async (req, res) => {
-        //console.log(req);
 	try {
 		var filter = {};
 		console.log(JSON.stringify(req.query));
@@ -62,20 +59,6 @@ async function start() {
 	}
     });
 
-	  /*
-    app.use((req, res, next) => {
-	console.log("Got request adding CORS headers");
-        res.header('Access-Control-Allow-Origin', 'http://172.19.0.4:3000');
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  
-        // Handle preflight OPTIONS requests
-        if (req.method === 'OPTIONS') {
-            return res.status(200).end();
-        }
-        next();
-    });
-    */
     app.use(cors({origin: '*'}));
 
 
