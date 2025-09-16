@@ -32,6 +32,18 @@ services:
       - "3001:3001"
     networks:
       - main-network
+  auth:
+    build: ./auth-backend-app
+    hostname: auth
+    environment:
+      SECRET_KEY: ${JWT_SECRET}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3002:3002"
+    networks:
+      - main-network
   db:
     image: mongo
     restart: always
@@ -52,18 +64,18 @@ services:
       timeout: 10s
   #  command: --ipv6
 
-  #mongo-express:
-  #  image: mongo-express
-  #  restart: always
-  #  ports:
-  #    - 8081:8081
-  #  environment:
-  #    ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
-  #    ME_CONFIG_BASICAUTH_ENABLED: true
-  #    ME_CONFIG_BASICAUTH_USERNAME: user
-  #    ME_CONFIG_BASICAUTH_PASSWORD: user
-  #  networks:
-  #    - main-network
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+      ME_CONFIG_BASICAUTH_ENABLED: true
+      ME_CONFIG_BASICAUTH_USERNAME: user
+      ME_CONFIG_BASICAUTH_PASSWORD: user
+    networks:
+      - main-network
     
 networks:
   main-network:

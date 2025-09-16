@@ -1,7 +1,12 @@
 //import logo from './logo.svg';
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
-import  Page from './Page.js';
+import AuthProvider from './AuthProvider.js'
+import Login from './Login.js'
+import CreateAccount from './CreateAccount.js'
+import PrivateRoute from './PrivateRoute.js'
+import Page from './Page.js';
 
 const backend_host = process.env.BACKEND_HOST || "localhost";
 const backend_port = process.env.BACKEND_PORT || 3001;
@@ -23,7 +28,16 @@ function App() {
   const pages_render = pages.map(page => (<><Page pageText={page.text}/></>));
   return (
     <div className="App">
-	  {pages_render}
+	  <Router>
+	    <AuthProvider>
+	      <Routes>
+	        <Route path="/login" element={<Login />} />
+	        <Route path="/" element={pages_render} />
+	        <Route path="/create-account" element={<CreateAccount />} />
+	      </Routes>
+
+	    </AuthProvider>
+	  </Router>
     </div>
   );
 }
