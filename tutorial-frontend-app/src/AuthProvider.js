@@ -37,8 +37,12 @@ const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
+  const getAuthHeader = () => {
+    return `Bearer ${token}`;
+  };
+
   return (
-    <AuthContext.Provider value={{ token, user, loginAction, logOut }}>
+    <AuthContext.Provider value={{ token, user, loginAction, logOut, getAuthHeader}}>
       {children}
     </AuthContext.Provider>
   );
