@@ -6,7 +6,8 @@ import AuthProvider from './AuthProvider.js'
 import Login from './Login.js'
 import CreateAccount from './CreateAccount.js'
 import PrivateRoute from './PrivateRoute.js'
-import Page from './Page.js';
+import Page from './Page.js'
+import CreatePage from './CreatePage.js'
 
 const backend_host = process.env.BACKEND_HOST || "localhost";
 const backend_port = process.env.BACKEND_PORT || 3001;
@@ -34,6 +35,9 @@ function App() {
 	        <Route path="/login" element={<Login />} />
 	        <Route path="/" element={pages_render} />
 	        <Route path="/create-account" element={<CreateAccount />} />
+	        <Route element={<PrivateRoute />}>
+	            <Route path="/create-page" element={<CreatePage />} />
+	        </Route>
 	      </Routes>
 
 	    </AuthProvider>
