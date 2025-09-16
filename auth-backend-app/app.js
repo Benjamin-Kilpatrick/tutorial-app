@@ -36,6 +36,8 @@ async function start() {
 
     app.use(express.json());
 
+    app.use(cors({origin: '*'}));
+
     app.post('/register', cors(), async (req, res) => {
          
 	 const {username, email, password} = req.body;
@@ -90,10 +92,10 @@ async function start() {
 
 		    if (!(user === null)){
 			    if (await bcrypt.compare(password, user.password)){
-				    const token = jwt.sign({ userId: user._id }, secret_key, {
+				    const token = jwt.sign({ userId: user._id, username}, secret_key, {
 					    expiresIn: '1 hour'
 				    });
-				    res.json(token);
+				    res.json({token, data:{userId: user._id, username}});
 			    }
 			    else{
 				    res.status(401).json({err: "Invalid credentials"});
@@ -112,7 +114,6 @@ async function start() {
 
 
 	
-    app.use(cors({origin: '*'}));
 
 
     app.listen(backend_port, () => {
