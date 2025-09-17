@@ -8,6 +8,7 @@ import CreateAccount from './CreateAccount.js'
 import PrivateRoute from './PrivateRoute.js'
 import Page from './Page.js'
 import CreatePage from './CreatePage.js'
+import NavHeader from './NavHeader.js'
 
 const backend_host = process.env.BACKEND_HOST || "localhost";
 const backend_port = process.env.BACKEND_PORT || 3001;
@@ -31,6 +32,7 @@ function App() {
     <div className="App">
 	  <Router>
 	    <AuthProvider>
+	      <NavHeader/>
 	      <Routes>
 	        <Route path="/login" element={<Login />} />
 	        <Route path="/" element={pages_render} />
