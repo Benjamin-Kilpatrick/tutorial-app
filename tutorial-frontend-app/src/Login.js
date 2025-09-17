@@ -21,7 +21,9 @@ const Login = () => {
     if (input.username !== "" && input.password !== "") {
       auth.loginAction(input);
     }
-    alert("please provide a valid input");
+    else{
+      alert("please provide a valid input");
+    }
   };
 
   const handleInput = (e) => {
@@ -36,17 +38,16 @@ const Login = () => {
     <>
     <form onSubmit={handleSubmitEvent}>
       <div className="form_control">
-        <label htmlFor="user-email">Email:</label>
+        <label htmlFor="user-name">User Name:</label>
         <input
-          type="email"
-          id="user-email"
-          name="email"
-          placeholder="example@domain.com"
+          type="text"
+          id="user-name"
+          name="username"
           aria-describedby="user-email"
           aria-invalid="false"
           onChange={handleInput}
         />
-        <div id="user-email" className="sr-only">
+        <div id="user-name" className="sr-only">
           Please enter a valid username. It must contain at least 6 characters.
         </div>
       </div>
@@ -68,7 +69,7 @@ const Login = () => {
     </form>
     <p>
 	  Don't have an account?
-	  <button onClick={navigate("/create-account")}>Create Account</button>
+	  <button onClick={e => navigate("/create-account")}>Create Account</button>
     </p>
     </>
   );
