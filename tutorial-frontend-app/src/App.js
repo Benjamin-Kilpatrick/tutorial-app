@@ -8,6 +8,7 @@ import CreateAccount from './CreateAccount.js'
 import PrivateRoute from './PrivateRoute.js'
 import Page from './Page.js'
 import CreatePage from './CreatePage.js'
+import EditPage from './EditPage.js'
 import NavHeader from './NavHeader.js'
 
 const backend_host = process.env.BACKEND_HOST || "localhost";
@@ -27,7 +28,7 @@ function App() {
 	  ).then(console.log(pages));
   }, []);
   
-  const pages_render = pages.map(page => (<><Page pageText={page.text}/></>));
+  const pages_render = pages.map(page => (<><Page pageTile={page.name} pageText={page.text} ownerId={page.owner} pageId={page._id}/></>));
   return (
     <div className="App">
 	  <Router>
@@ -39,6 +40,7 @@ function App() {
 	        <Route path="/create-account" element={<CreateAccount />} />
 	        <Route element={<PrivateRoute />}>
 	            <Route path="/create-page" element={<CreatePage />} />
+	            <Route path="/edit-page/:id" element={<EditPage />} />
 	        </Route>
 	      </Routes>
 

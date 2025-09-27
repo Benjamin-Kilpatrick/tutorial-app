@@ -86,7 +86,7 @@ async function start() {
 	}
     });
 
-    app.post('/pages', cors(), verifyToken, async(req, res) => {
+    app.put('/pages', cors(), verifyToken, async(req, res) => {
 	    try{
 		    var filter = {"_id": new ObjectId(req.body._id)}
 		    const old_page = await pagesCollection.findOne(filter);
@@ -107,7 +107,7 @@ async function start() {
                                     text: req.body.text
 			    }
 		    }
-		    const result = await pagesCollection.insertOne(filter, page_update);
+		    const result = await pagesCollection.updateOne(filter, page_update);
 		    res.status(200).send({message: "Edited Page"});
 	    }
 	    catch(err){
@@ -116,7 +116,7 @@ async function start() {
 	    }
     });
 
-    app.put('/pages', cors(), verifyToken, async(req, res) => {
+    app.post('/pages', cors(), verifyToken, async(req, res) => {
 	    try{
                     //const json_body = JSON.parse(req.body);
                     const page = {

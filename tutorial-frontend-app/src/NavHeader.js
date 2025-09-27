@@ -13,7 +13,7 @@ function NavHeader({user}){
 	if (page_location.pathname !== '/') buttons.push(<button onClick={e => navigate('/')}>Home</button>);
 	if (auth.token) {
 		if (page_location.pathname !== '/create-page') buttons.push(<button onClick={e => navigate('/create-page')}>Create New Page</button>);
-                buttons.push(<button onClick={e => auth.logOut()}>Log Out</button>);
+                buttons.push(<button onClick={e => auth.logOut()}>Log Out {auth.user}</button>);
 	}
 	else{
 		if (page_location.pathname !== '/login') buttons.push(<button onClick={e => navigate('/login')}>Login</button>);
