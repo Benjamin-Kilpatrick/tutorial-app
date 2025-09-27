@@ -20,15 +20,12 @@ function App() {
   const pages_endpoint_url = `http://${backend_host}:${backend_port}/pages`;
   useEffect(() => {
 	  fetch(pages_endpoint_url).then(response => response.json()).then(json => {
-		  //console.log("Pages: ")
-		  //console.log(pages)
-		  //console.log(json)
 		  setPages([...pages, ...json])
 	  }
-	  ).then(console.log(pages));
+	  );
   }, []);
   
-  const pages_render = pages.map(page => (<><Page pageTile={page.name} pageText={page.text} ownerId={page.owner} pageId={page._id}/></>));
+  const pages_render = pages.map(page => (<><Page pageName={page.name} pageText={page.text} ownerId={page.owner} pageId={page._id}/></>));
   return (
     <div className="App">
 	  <Router>

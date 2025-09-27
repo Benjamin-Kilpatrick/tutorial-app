@@ -2,6 +2,7 @@ import ReactMarkdown from "react-markdown";
 import { useState } from 'react';
 import { useAuth } from "./AuthProvider.js";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function CreatePage(){
 	const [pageText, setPageText] = useState("");
@@ -9,6 +10,7 @@ function CreatePage(){
 	const { id } = useParams();
 
 	const auth = useAuth();
+	const navigate = useNavigate();
 
 	const handleSubmitEvent = async (e) => {
 		e.preventDefault();
@@ -23,6 +25,12 @@ function CreatePage(){
 				name: pageName
 			}) 
 		} );
+		if (!result.ok) {
+			alert("Error occured");
+		}
+		else{
+			navigate("/");
+		}
 	}
 
 	return (
